@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+</head>
+<html>
+    <head>
+        <style>
+            .box{
+                width: 40px; height:40px;
+                position:relative;
+                background-color: red;
+                z-index: 1;
+                /*float 속성으로 왼쪽정렬, margin&padding으로 각 박스 간격 설정*/
+                margin: 5px; padding:5px;
+                float:left; 
+                /*박스 내부 글자 설정*/
+                font-size:medium; text-align:center; color:white;
+                line-height: 40px;
+            }
+            #B:hover{
+                background-color: green;
+                position:relative;
+                left: 20px; top: 20px;
+                z-index: 10;
+            }
+            #E:hover{
+                background-color: green;
+                right: 20px; bottom: 20px;
+                z-index: 11;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>div 배치</h1>
+        <hr>
+        <div class="box">A</div>
+        <div class="box" id="B">B</div>
+        <div class="box">C</div>
+        <div class="box">D</div>
+        <div class="box" id="E">E</div>
+        <div class="box">F</div>
+    </body>
+</html>

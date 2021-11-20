@@ -1,0 +1,7 @@
+const timeout = setTimeout(()=>{console.log('1.5초 후 실행');},1500);
+const interval = setInterval(()=>{console.log('1초마다 실행');},1000);
+const timeout2 = setTimeout(()=>{console.log('x');}, 3000);
+setTimeout(()=>{clearTimeout(timeout2);clearTimeout(interval);},2500);
+const immediate = setImmediate(()=>{console.log('즉 시 실 행');});
+const immediate2 = setImmediate(()=>{console.log('x');});
+clearImmediate(immediate2);
