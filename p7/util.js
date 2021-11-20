@@ -1,16 +1,16 @@
 const util = require('util');
 const crypto = require('crypto');
 
-const dontUseMe = util.deprecate((x,y)=>{
-    console.log(x+y);
+const dontUseMe = util.deprecate((x, y) => {
+    console.log(x + y);
 }, 'dontUseMe is outdated');
-dontUseMe(1,2);
+dontUseMe(1, 2);
 
 const randomBytesPromise = util.promisify(crypto.randomBytes);
 randomBytesPromise(64)
-    .then((buf)=>{
+    .then((buf) => {
         console.log(buf.toString('base64'));
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.error(error);
     });

@@ -9,8 +9,8 @@ console.log('os.hostname():', os.hostname());
 console.log('os.release():', os.release());
 
 console.log('path---------------------------------');
-console.log('os.homedir():',os.homedir());
-console.log('os.tmpdir():',os.tmpdir());
+console.log('os.homedir():', os.homedir());
+console.log('os.tmpdir():', os.tmpdir());
 
 console.log('cpu----------------------------------');
 console.log('os.cpus():', os.cpus());

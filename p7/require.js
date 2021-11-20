@@ -7,7 +7,7 @@ console.log('===require.cache===');
 console.log(require.cache);
 
 console.log('===require.main===');
-console.log(require.main===module);
+console.log(require.main === module);
 
 console.log('===require.main.filemane===');
 console.log(require.main.filename);

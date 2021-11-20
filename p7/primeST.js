@@ -2,17 +2,17 @@ const min = 2;
 const max = 10000000;
 const primes = [];
 
-function genPrimes(start, range){
+function genPrimes(start, range) {
     let isPrime = true;
     const end = start + range;
-    for(let i = start; i<end; i++){
-        for(let j = min; j<Math.sqrt(end);j++){
-            if(i!==j && i%j ===0){
+    for (let i = start; i < end; i++) {
+        for (let j = min; j < Math.sqrt(end); j++) {
+            if (i !== j && i % j === 0) {
                 isPrime = false;
                 break;
             }
         }
-        if(isPrime){
+        if (isPrime) {
             primes.push(i);
         }
         isPrime = true;
