@@ -1,0 +1,17 @@
+.bash_logout
+.cache
+.config
+.local
+.npm
+.ssh
+.vscode-server
+.bash_history
+.bash_logout
+.bashrc
+.node_repl_history
+.profile
+.viminfo
+.wget-hsts
+.gitconfig
+package-lock.json
+/node_modules/
