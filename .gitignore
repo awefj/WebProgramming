@@ -16,6 +16,5 @@
 .mysql_history
 package-lock.json
 /node_modules/
-/learn-sequelize/config/
 /learn-sequelize/node_modules/
 /nodebird/node_modules/
