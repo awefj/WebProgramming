@@ -13,5 +13,6 @@
 .viminfo
 .wget-hsts
 .gitconfig
+.mysql_history
 package-lock.json
 /node_modules/
