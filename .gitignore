@@ -15,6 +15,7 @@
 .gitconfig
 .mysql_history
 package-lock.json
-/node_modules/
 /learn-sequelize/node_modules/
+/learn-sequelize/config/
 /nodebird/node_modules/
+/nodebird/config/
