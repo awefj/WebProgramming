@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>웹 페이지</title>
+    <script>
+        // 화면 구성이 완료되면
+        window.onload = function () {
+            // h1 태그 내부의 문자를 변경합니다.
+            var header = document.getElementById('header');
+            var originalText = header.innerHTML;
+            header.innerHTML = '자바스크립트로 변경했어요!<br />';
+            header.innerHTML += '원래는 ' + originalText + '였답니다!';
+        };
+    </script>
+</head>
+
+<body>
+    <h1 id="header">Header 1</h1>
+</body>
+
+</html>

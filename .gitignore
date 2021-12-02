@@ -16,5 +16,7 @@
 package-lock.json
 /learn-sequelize/node_modules/
 /learn-sequelize/config/
-/nodebird/node_modules/
+/nodebird/.env
 /nodebird/config/
+/nodebird/uploads/
+/nodebird/node_modules/
