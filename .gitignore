@@ -1,3 +1,4 @@
+*.env
 .cache
 .config
 .local
@@ -14,9 +15,8 @@
 .gitconfig
 .mysql_history
 package-lock.json
-/learn-sequelize/node_modules/
 /learn-sequelize/config/
-/nodebird/.env
+/learn-sequelize/node_modules/
 /nodebird/config/
 /nodebird/uploads/
 /nodebird/node_modules/
