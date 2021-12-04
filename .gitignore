@@ -22,3 +22,5 @@ package-lock.json
 /nodebird/seeders/
 /nodebird/uploads/
 /nodebird/node_modules/
+/project/config/
+/project/node_modules/
