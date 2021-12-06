@@ -5,7 +5,7 @@
     <form id="accountForm" action="/auth/account" method="post">
         <div class="inputGroup">
             <label for="accountEmail">이메일</label>
-            <input id="accountEmail" type="email" name="email">
+            <input id="accountEmail" type="email" name="email" required autofocus>
         </div>
         <div class="inputGroup">
             <label for="accountName">이름</label>
@@ -17,7 +17,7 @@
         </div>
         <div class="inputGroup">
             <label for="accountPassword">비밀번호</label>
-            <input id="accountPassword" type="password" name="password" required>
+            <input id="accountPassword" type="password" name="password" required autofocus>
         </div>
         <button id="account" type="submit" class="btn">회원가입</button>
     </form>

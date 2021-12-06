@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile', { title: 'Web47 SNS - 내 정보' });
+    res.render('profile', { title: '내 정보 - Web47 SNS' });
 })
 
 router.get('/account', isNotLoggedIn, (req, res) => {
