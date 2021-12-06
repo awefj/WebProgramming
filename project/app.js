@@ -1,7 +1,7 @@
 const express = require('express');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const dotenv = require('dotenv');
 const path = require('path');
 const nunjucks = require('nunjucks');
@@ -9,20 +9,19 @@ const passport = require('passport');
 
 dotenv.config();
 const mainRouter = require('./routes/main');// 라우터
+const authRouter = require('./routes/auth');
 
-//const { sequelize } = require('./models');
-//const passportConfig = require('./passport');
-
+const {sequelize} = require('./models');
+const passportConfig = require('./passport');
 
 const app = express();
-//passportConfig();// 패스포트 설정
+passportConfig();// 패스포트 설정
 app.set('port', process.env.PORT || 8047);// 8047 포트 사용
 app.set('view engine', 'html');// nunjucks 사용
 nunjucks.configure('views', {
     express: app,
     watch: true,
 });
-/*
 sequelize.sync({ force: false })
     .then(() => {
         console.log('데이터베이스 연결 성공');
@@ -30,7 +29,6 @@ sequelize.sync({ force: false })
     .catch((err) => {
         console.error(err);
     });
-*/
 app.use(morgan('dev'));
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
@@ -46,8 +44,8 @@ app.use(session({
         secure: false,
     },
 }));
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', mainRouter);// 라우터 사용
 
