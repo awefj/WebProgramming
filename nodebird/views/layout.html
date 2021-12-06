@@ -38,7 +38,9 @@
                     </div>
                     <a id="join" href="/join" class="btn">회원가입</a>
                     <button id="login" type="submit" class="btn">로그인</button>
+                    <!--
                     <a id="kakao" href="/auth/kakao" class="btn">카카오톡</a>
+                    -->
                 </form>
                 {% endif %}
             </div>
@@ -48,7 +50,7 @@
         {% block content %}
         {% endblock %}
     </div>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
     <script>
         window.onload = () => {
             if (new URL(location.href).searchParams.get('loginError')) {
