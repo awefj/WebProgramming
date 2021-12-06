@@ -43,7 +43,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
                 console.error(loginError);
                 return next(loginError);
             }
-            return res.redirect('/profile.html');
+            return res.redirect('/profile');// 로그인 성공시 profile로 리다이렉트
         });
     })(req, res, nexxt); //미들웨어 내 미들웨어에는 (req, res, next) 붙임
 });
