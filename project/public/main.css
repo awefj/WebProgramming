@@ -1,0 +1,33 @@
+* {box-sizing: border-box;}
+html, body {margin: 0; padding: 0; height: 100%;}
+
+.btn{
+    display: linine-block;
+    padding: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: white;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid black;
+    vertical-align: top;
+    font-size: 15px;
+}
+
+.inputGroup {margin-bottom: 15px;}
+.inputGroup label {width: 25%; display: inline-block;}
+.inputGroup input {width: 70%;}
+
+.container {width: 100%;height: 100%;}
+@media screen and (min-width:800px) {
+    .container {width: 800px;margin: 0 auto; margin-top: 1%;}
+}
+.loginContainer {
+    float: right;
+    width: 300px;
+    margin-top: 3%;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: lightgreen;
+}
