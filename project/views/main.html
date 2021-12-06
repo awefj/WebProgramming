@@ -6,11 +6,11 @@
     <form id="loginForm" action="/auth/login">
         <div class="inputGroup">
             <label for="email">이메일</label>
-            <input id="email" type="email" name="email">
+            <input id="email" type="email" name="email" required autofocus>
         </div>
         <div class="inputGroup">
             <label for="password">비밀번호</label>
-            <input id="password" type="password" name="password">
+            <input id="password" type="password" name="password" required autofocus>
         </div>
         <div>
             <button id="login" type="submit" class="btn">로그인</button>

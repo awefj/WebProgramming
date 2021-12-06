@@ -1,5 +1,5 @@
 const passport = require('passport');
-const localStrategy = require('./localStrategy');
+const local = require('./localStrategy');
 const User = require('../models/user');
 
 module.exports = () => {
@@ -11,12 +11,16 @@ module.exports = () => {
             where: { id },
             include: [{
                 model: User,
-                attributes: ['id', 'nick'],
+                attributes: ['id', 'web47ID'],
+                as: 'Followers',
+            }, {
+                model: User,
+                attributes: ['id', 'web47ID'],
                 as: 'Followings',
             }],
         })
             .then(user => done(null, user))
             .catch(err => done(err));
     });
-    localStrategy();
+    local();
 };

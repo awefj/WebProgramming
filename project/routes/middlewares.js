@@ -14,3 +14,9 @@ exports.isNotLoggedIn = (req, res, next) => {
         res.redirect(`/?error=${message}`);
     }
 };
+
+exports.isEmailConfirmed = (req, res, next) =>{
+};
+
+exports.isEmailNotConfirmed = (req, res, next) =>{
+};
