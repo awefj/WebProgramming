@@ -10,25 +10,21 @@
 <body>
     <div class="containerRoot">
         <main class="container">
-            <img class="image" src="/front.jpg" width="400">
-            <div class="loginContainer">
-                <form id="loginForm" action="/auth/login">
-                    <div class="inputGroup">
-                        <label for="email">이메일</label>
-                        <input id="email" type="email" name="email" required autofocus>
-                    </div>
-                    <div class="inputGroup">
-                        <label for="password">비밀번호</label>
-                        <input id="password" type="password" name="password" required>
-                    </div>
-                    <button id="join" href="/account" class="btn">회원가입</button>
-                    <button id="login" type="submit" class="btn">로그인</button>
-                </form>
-            </div>
+            {% block content %}
+            {% endblock %}
         </main>
         <footer class="footer">
         </footer>
     </div>
+    <script>
+        window.onload = () => {
+            if (new URL(location.href).searchParams.get('loginError')) {
+                alert(new URL(location.href).searchParams.get('loginError'));
+            }
+        };
+    </script>
+    {% block script %}
+    {% endblock %}
 </body>
 
 </html>
