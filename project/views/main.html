@@ -3,7 +3,7 @@
 {% block content %}
 <img class="image" src="/front.jpg" width="400">
 <div class="loginContainer">
-    <form id="loginForm" action="/auth/login">
+    <form id="loginForm" action="/auth/login" method="post">
         <div class="inputGroup">
             <label for="email">이메일</label>
             <input id="email" type="email" name="email" required autofocus>
