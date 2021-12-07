@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<main class="container">
+<div class="accountContainer">
     <form id="accountForm" action="/auth/account" method="post">
         <div class="inputGroup">
             <label for="accountEmail">이메일</label>
@@ -26,8 +26,8 @@
             <a id="account" href="/" class="btn">처음 화면으로</a>
         </div>
     </form>
-</main>
-<footer class="footer">
+</div>
+<footer class="accountFooter">
 </footer>
 {% endblock %}
 

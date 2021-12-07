@@ -1,7 +1,6 @@
 * {box-sizing: border-box;}
 html, body {margin: 0; padding: 0; height: 100%;}
 
-
 .btn{
     display: linine-block;
     width: 100%; height: 100%;
@@ -22,18 +21,27 @@ html, body {margin: 0; padding: 0; height: 100%;}
 .inputGroup label {width: 25%; display: inline-block;}
 .inputGroup input {width: 70%;}
 
-.containerRoot{
-    margin: 0 auto; margin-top: 40px;
-}
-.container {width: 100%;height: 100%;}
+.containerRoot {width: 100%;height: 100%;}
 @media screen and (min-width:1000px) {
-    .container {width: 1000px;margin: 0 auto; margin-top: 40px;}
+    .containerRoot {width: 1000px;margin: 0 auto; margin-top: 40px;}
 }
 .loginContainer {
-    margin-top: 40px;
+    margin: 40px;
     width: 400px;
-    text-align: left;
+    text-align: center;
     padding: 10px;
+    border: 1px solid black;
+    background-color: lightgreen;
+}
+.accountContainer {
+    text-align: center;
+    padding: auto;
+    border: 1px solid black;
+    background-color: lightgreen;
+}
+.profileContainer {
+    text-align: center;
+    padding: auto;
     border: 1px solid black;
     background-color: lightgreen;
 }

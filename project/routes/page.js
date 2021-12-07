@@ -11,16 +11,18 @@ router.use((req, res, next) => {
     res.locals.followerIdList = req.user ? req.user.Followings.map(f => f.id) : [];
     next();
 });
+
 router.get('/home', isLoggedIn, (req, res) => {
     res.render('home', { title: '메인 - Web47 SNS' });
-})
+});
+
 router.get('/profile', isLoggedIn, (req, res) => {
     res.render('profile', { title: '내 정보 - Web47 SNS', currentTime: `${Date()}` });
-})
+});
 
 router.get('/account', isNotLoggedIn, (req, res) => {
     res.render('account', { title: 'Web47 SNS - 회원가입' });
-})
+});
 
 router.get('/', (req, res) => {
     res.render('main', { title: 'Web47 SNS' });
@@ -30,6 +32,5 @@ router.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 });
-
 
 module.exports = router;

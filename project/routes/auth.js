@@ -16,7 +16,7 @@ router.post('/account', isNotLoggedIn, async (req, res, next) => {
         if (exID) {
             return res.redirect('/account?error=ID_exist')
         }
-        const hash = await bcrypt.hash(password, 12);
+        const hash = await bcrypt.hash(password, 12); // 패스워드 암호화
         await User.create({
             email,
             name,
