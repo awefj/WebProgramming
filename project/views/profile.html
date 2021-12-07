@@ -2,9 +2,20 @@
 
 {% block content %}
 <div class="profileContainer">
+    <div class="userName">{{'user ' + user.name}}</div>
+    <div>
+        <div>following</div>
+        <div class="followingCount">{{followingCount}}</div>
+    </div>
+    <div>
+        <div>follower</div>
+        <div class="followerCount">{{followerCount}}</div>
+    </div>
+    <div>
+        {{currentTime}}
+    </div>
     <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
     <a id="home" href="/home" class="btn">메인 화면</a>
-    <a>{{currentTime}}</a>
     </form>
 </div>
 <footer class="profileFooter"></footer>

@@ -26,6 +26,7 @@ html, body {margin: 0; padding: 0; height: 100%;}
     .containerRoot {width: 1000px;margin: 0 auto; margin-top: 40px;}
 }
 .loginContainer {
+    float: right;
     margin: 40px;
     width: 400px;
     text-align: center;
