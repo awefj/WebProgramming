@@ -24,7 +24,7 @@
   "scripts": {
     "start": "nodemon app"
   },
-  "author": "yonggeon",
-  "license": "ISC",
+  "author": "web47",
+  "license": "MIT",
   "description": ""
 }

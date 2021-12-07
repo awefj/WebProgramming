@@ -18,8 +18,9 @@
     </div>
     <script>
         window.onload = () => {
-            if (new URL(location.href).searchParams.get('loginError')) {
-                alert(new URL(location.href).searchParams.get('loginError'));
+            loginError = new URL(location.href).searchParams.get('loginError');
+            if (loginError) {
+                alert(loginError);
             }
         };
     </script>
