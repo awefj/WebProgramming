@@ -11,13 +11,11 @@ router.use((req, res, next) => {
     res.locals.followerIdList = req.user ? req.user.Followings.map(f => f.id) : [];
     next();
 });
-/*
 router.get('/home', isLoggedIn, (req, res) => {
     res.render('home', { title: '메인 - Web47 SNS' });
 })
-*/
 router.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile', { title: '내 정보 - Web47 SNS' });
+    res.render('profile', { title: '내 정보 - Web47 SNS', currentTime: `${Date()}` });
 })
 
 router.get('/account', isNotLoggedIn, (req, res) => {
