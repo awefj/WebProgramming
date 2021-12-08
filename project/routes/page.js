@@ -1,5 +1,5 @@
 const express = require('express');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, isEmailConfirmed } = require('./middlewares');
 const { Post, User, Hashtag } = require('../models');
 
 const router = express.Router();
@@ -12,7 +12,7 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/home', isLoggedIn, (req, res) => {
+router.get('/home', isLoggedIn, isEmailConfirmed, (req, res) => {
     res.render('home', { title: '메인 - Web47 SNS' });
 });
 

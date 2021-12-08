@@ -8,8 +8,8 @@ const router = express.Router();
 router.post('/account', isNotLoggedIn, async (req, res, next) => {
     const { email, name, web47ID, password } = req.body;
     try {
-        const exUser = await User.findOne({ where: { email } });
-        const exID = await User.findOne({ where: { web47ID } });
+        const exUser = await User.findOne({ where: { email } }); //동일 이메일 있는지 검사
+        const exID = await User.findOne({ where: { web47ID } }); //동일 id 있는지 검사
         if (exUser) {
             return res.redirect('/account?error=email_exist');
         }
@@ -52,4 +52,5 @@ router.get('/logout', isLoggedIn, (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
+
 module.exports = router;

@@ -1,3 +1,4 @@
+const { TIME } = require('sequelize');
 const Sequelize = require('sequelize');
 
 module.exports = class User extends Sequelize.Model {
@@ -20,6 +21,11 @@ module.exports = class User extends Sequelize.Model {
             password: {
                 type: Sequelize.STRING(100),
                 allowNull: false,
+            },
+            emailConfirm: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+                defaultValue: false,
             },
         }, {
             sequelize,

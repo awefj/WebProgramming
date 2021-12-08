@@ -25,5 +25,12 @@
 {% endblock %}
 
 {% block script %}
-<script></script>
+<script>
+    window.onload = ()=>{
+        err = new URL(location.href).searchParams.get('error');
+        if(err == 'need_login'){
+            alert('로그인이 필요합니다.');
+        }
+    }
+</script>
 {% endblock %}

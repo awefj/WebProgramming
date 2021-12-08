@@ -2,6 +2,8 @@
 
 {% block content %}
 <div class="profileContainer">
+    {% if user and user.id %}
+    {% if user.emailConfirm %}
     <div class="userName">{{'user ' + user.name}}</div>
     <div>
         <div>following</div>
@@ -15,12 +17,43 @@
         {{currentTime}}
     </div>
     <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+    <a id="follow" href="/follow" class="btn">팔로우 관리</a>
     <a id="home" href="/home" class="btn">메인 화면</a>
+    {% else %}
+    <div class="userName">{{'user ' + user.name}}</div>
+    <div>이메일 인증 필요</div>
+    <form id="codeSend" action="/auth/codeSend" method="post">
+        <div>
+            <button id="authCodeSend" type="submit" class="btn">인증번호 보내기</button>
+        </div>
     </form>
+    <form id="authForm" action="/auth/emailConfirm" method="post">
+        <div class="inputGroup">
+            <label for="authCode">인증번호</label>
+            <input id="authCode" type="text" name="authCode" required>
+        </div>
+        <div>
+            <button id="authCodeSubmit" type="submit" class="btn">인증하기</button>
+        </div>
+        <div>
+            <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+        </div>
+    </form>
+    {% endif %}
+    {% endif %}
 </div>
 <footer class="profileFooter"></footer>
 {% endblock %}
 
 {% block script %}
-<script></script>
+<script>
+    window.onload = ()=>{
+        err = new URL(location.href).searchParams.get('error');
+        if(err == 'already_loggedin'){
+            alert('이미 로그인했습니다.');
+        }else if(err == 'need_email_confirm'){
+            alert('이메일 인증이 필요합니다.');
+        }
+    }
+</script>
 {% endblock %}
