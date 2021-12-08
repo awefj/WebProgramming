@@ -30,7 +30,7 @@ exports.isEmailConfirmed = (req, res, next) =>{
     }
 };
 
-exports.smtTransport = nodemailer.createTransport({
+exports.smtpTransport = nodemailer.createTransport({
     service: "gmail",
     host: 'smtp.gmail.com',
     auth: {

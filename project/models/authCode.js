@@ -19,6 +19,9 @@ module.exports = class AuthCode extends Sequelize.Model {
         });
     }
     static associate(db){
-        db.AuthCode.belongsTo(db.User);
+        db.AuthCode.belongsTo(db.User, {
+            foreignKey: 'userID', 
+            targetKey:'id'
+        });
     }
 }

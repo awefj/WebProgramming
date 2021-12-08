@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const {smtpTransport} = require('./middlewares');
 const User = require('../models/user');
 const router = express.Router();
 
@@ -50,13 +51,15 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 router.post('/codeSend', isLoggedIn,(req,res,next)=>{
     const { email, web47ID } = req.body;
     try{
-        console.log(`${req.user} : requested email confirmation code`);
-        const authCode = await 
+        console.log(`${req.user.id} : requested email confirmation code`);
+        //const authCode = await  
     }catch(err){
         console.error(err);
         return next(err);
     }
-})
+});
+router.post('/emailConfirm', isLoggedIn, (req,res,next)=>{
+});
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logOut();
     req.session.destroy();

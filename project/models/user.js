@@ -49,6 +49,9 @@ module.exports = class User extends Sequelize.Model {
             as: 'Followings',
             through: 'Follow',
         });
-        db.User.hasMany(db.AuthCode);//인증코드 여러 번 받을수 있음
+        db.User.hasOne(db.AuthCode, {
+            foreignKey: 'userID',
+            sourceKey:'id'
+        });
     }
 };
