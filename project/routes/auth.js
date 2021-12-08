@@ -47,6 +47,16 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         });
     })(req, res, next); //미들웨어 내 미들웨어에는 (req, res, next) 붙임
 });
+router.post('/codeSend', isLoggedIn,(req,res,next)=>{
+    const { email, web47ID } = req.body;
+    try{
+        console.log(`${req.user} : requested email confirmation code`);
+        const authCode = await 
+    }catch(err){
+        console.error(err);
+        return next(err);
+    }
+})
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logOut();
     req.session.destroy();
