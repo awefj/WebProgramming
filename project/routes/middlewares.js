@@ -34,8 +34,8 @@ exports.smtpTransport = nodemailer.createTransport({
     service: "gmail",
     host: 'smtp.gmail.com',
     auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
+        user: process.env.MAILUSER,
+        pass: process.env.MAILPASS,
     },
     tls: {
         rejectUnauthorized: false

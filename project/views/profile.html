@@ -53,6 +53,10 @@
             alert('이미 로그인했습니다.');
         }else if(err == 'need_email_confirm'){
             alert('이메일 인증이 필요합니다.');
+        }else if(err == 'no_code'){
+            alert('이메일 인증 코드가 다르거나 인증 코드를 받지 않았습니다.');
+        }else if(err == 'timeout'){
+            alert('인증 코드 유효 시간이 지났습니다. (3분)');
         }
     }
 </script>

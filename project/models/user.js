@@ -51,7 +51,7 @@ module.exports = class User extends Sequelize.Model {
         });
         db.User.hasOne(db.AuthCode, {
             foreignKey: 'userID',
-            sourceKey:'id'
+            sourceKey:'web47ID'
         });
     }
 };
