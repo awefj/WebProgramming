@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { Post, Hashtag } = require('../models');
-const { isLoggedIn } = require('./middlewares');
+const { isLoggedIn, isEmailConfirmed } = require('./middlewares');
 const router = express.Router();
 
 try {
@@ -32,7 +32,7 @@ router.post('/img', isLoggedIn, isEmailConfirmed, uploadImg.array('imgs', 5), fu
 });
 //포스트
 const upload = multer();
-router.post('/', isLoggendIn, isEmailConfirmed, upload.none(), async (req, res, next) => {
+router.post('/', isLoggedIn, isEmailConfirmed, upload.none(), async (req, res, next) => {
     try {
         console.log(`upload : ${req.user}`);
         const post = await Post.create({

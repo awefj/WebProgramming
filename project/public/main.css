@@ -46,3 +46,6 @@ html, body {margin: 0; padding: 0; height: 100%;}
     border: 1px solid black;
     background-color: lightgreen;
 }
+.post{
+    border: 1px solid black;
+}
