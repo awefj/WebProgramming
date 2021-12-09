@@ -2,15 +2,67 @@
 
 {% block content %}
 <div class="homeContainer">
-    <a id="home" href="/home" class="btn">home</a>
-    <a id="new" href="/new" class="btn">new</a>
-    <a id="profile" href="/profile" class="btn">profile</a>
-    <a id="follow" href="/follow" class="btn">follow</a>
-    <a id="message" href="/msg" class="btn">message</a>
-    <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+    <div>
+        <a id="home" href="/home" class="btn">home</a>
+        <a id="new" href="/new" class="btn">new</a>
+        <a id="profile" href="/profile" class="btn">profile</a>
+        <a id="follow" href="/follow" class="btn">follow</a>
+        <a id="message" href="/msg" class="btn">message</a>
+        <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+    </div>
+    <div>
+        {% for post in posts %}
+        <div class="post">
+            <form id="hashtagForm" action="/hashtag">
+                <input type="text" name="hashtag" placeholder="해시태그 검색">
+                <button class="btn">검색</button>
+            </form>
+            <input type="hidden" value="{{post.User.Web47ID}}" class="postUserID">
+            <input type="hidden" value="{{post.id}}" class="postID">
+            <div class="postAuthor">{{post.User.name}}</div>
+            {% if not followerIdList.includes(post.User.id) and post.User.id !== user.id %}
+            <button class="postFollow">팔로우하기</button>
+            {% endif %}
+            <div class="postContent">{{post.content}}</div>
+            {% if post.imgs %}
+            <div class="postImg"><img src="{{post.imgs}}" alt="thumbnail"></div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
 
 {% block script %}
-<script></script>
+<script>
+    if (document.getElementById('imgs')) {
+        document.getElementById('imgs').addEventListener('change', function (e) {
+            const formData = new FormData();
+            console.log(this, this.files);
+            formData.append('imgs', this.files);
+            axios.post('/post/img', formData)
+                .then((res) => {
+                    document.getElementById('imgUrl').value = res.data.url;
+                    document.getElementById('imgPreview').src = res.data.url;
+                    document.getElementById('imgPreview').style.display = 'inline';
+                })
+                .catch((err) => { console.errror(err); });
+        });
+    }
+    document.querySelectorAll('.postFollow').forEach(function (tag) {
+        tag.addEventListener('click', function () {
+            const myID = document.querySelector('#myID');
+            if (myID) {
+                const userID = tag.parentNode.querySelector('.postUserID').value;
+                if (userID !== myID.value) {
+                    if (confirm('팔로우하시겠습니까?')) {
+                        axios.post(`user/${userID}/follow`)
+                            .then(() => { location.reload(); })
+                            .catch((err) => { console.errror(err); });
+                    }
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

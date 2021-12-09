@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="homeContainer">
+    <a id="home" href="/home" class="btn">home</a>
+    <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src = "https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}

@@ -7,24 +7,8 @@ module.exports = class Post extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: false,
             },
-            img0: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img1: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img2: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img3: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img4: {
-                type: Sequelize.STRING(200),
+            imgs: {
+                type: Sequelize.ARRAY(Sequelize.STRING(100)),
                 allowNull: true,
             },
         }, {

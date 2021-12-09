@@ -4,7 +4,7 @@
 <div class="profileContainer">
     {% if user and user.id %}
     {% if user.emailConfirm %}
-    <div class="userName">{{'user ' + user.name}}</div>
+    <div class="userName">{{'user : ' + user.name}}</div>
     <div>
         <div>following</div>
         <div class="followingCount">{{followingCount}}</div>

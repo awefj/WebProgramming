@@ -12,9 +12,31 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/home', isLoggedIn, isEmailConfirmed, (req, res) => {
-    res.render('home', { title: '메인 - Web47 SNS' });
+router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    let pageNum = req.query.pageNum;//요청한 페이지
+    try {
+        const posts = await Post.findAll({
+            include: {//해당 페이지 9개만 가져와야됨
+                offset: 9 * (pageNum - 1),
+                limit: 9,
+                model: User,
+                attributes: ['id', 'name'],
+            },
+            order: [['createdAt', "DESC"]],
+        });
+        res.render('home', {
+            title: '메인 - Web47 SNS',
+            posts: posts,
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
+
+router.get('/follow', isLoggedIn, isEmailConfirmed, (req, res)=>{
+    res.render('follow', {title: '팔로우 관리 - Web47 SNS'});
+})
 
 router.get('/profile', isLoggedIn, (req, res) => {
     res.render('profile', { title: '내 정보 - Web47 SNS', currentTime: `${Date()}` });
