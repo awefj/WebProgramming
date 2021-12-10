@@ -44,21 +44,20 @@ router.get('/new', isLoggedIn, isEmailConfirmed, (req, res) => {
 });
 
 router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
-    const following = req.user.Followings.map(f => f.id);
+    console.log(`id : ${req.user.id} typeof id : ${typeof req.user.id}`);
+    const following = req.user.Followings.map(f => f.id);// 팔로우 중인 유저
+    //console.log("following : " + following);
+    const exclude = following.concat(req.user.id);// 본인과 팔로우 중인 유저
+    //console.log("exclude : " + exclude);
     try {
         const notFollowing = await User.findAll({
             attributes: ['id', 'name'],
             where: {
-                id:{
-                    [Op.and]:{
-                        [Op.not]: following,
-                        [Op.not]: req.user.id
-                    }
-                }
+                id: { [Op.not]: exclude }
             },
-            order: [['createdAt', 'DESC']],
+            //order: [['createdAt', 'DESC']],
         });
-        //console.log("not following : " + notFollowing.map(f=>f.id));
+        console.log("not following : " + notFollowing.map(f => f.id));
         res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
     } catch (err) {
         console.error(err);
