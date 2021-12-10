@@ -48,21 +48,6 @@
                 })
                 .catch((err) => { console.errror(err); });
         });
-    }
-    document.querySelectorAll('.postFollow').forEach(function (tag) {
-        tag.addEventListener('click', function () {
-            const myID = document.querySelector('#myID');
-            if (myID) {
-                const userID = tag.parentNode.querySelector('.postUserID').value;
-                if (userID !== myID.value) {
-                    if (confirm('팔로우하시겠습니까?')) {
-                        axios.post(`user/${userID}/follow`)
-                            .then(() => { location.reload(); })
-                            .catch((err) => { console.errror(err); });
-                    }
-                }
-            }
-        });
-    });
+    };
 </script>
 {% endblock %}
