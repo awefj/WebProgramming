@@ -5,19 +5,21 @@
     <input id="myID" type="hidden" value="{{user.id}}">
     <a id="home" href="/home" class="btn">home</a>
     <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+
     <div class="followings">
         <h2>팔로잉 목록</h2>
         {% if user.Followings %}
         {% for following in user.Followings %}
         <div>
             <input class="followingID" type="hidden" value="{{following.id}}">
-            {{following.name}}
+            {{following.web47ID}}
             <button class="unfollow">언팔로우하기</button>
         </div>
         {% endfor %}
         {% endif %}
     </div>
-    <div class="followers">
+
+    <div class="followables">
         <h2>팔로우 가능 목록</h2>
         {% if notFollow %}
         {% for followable in notFollow %}

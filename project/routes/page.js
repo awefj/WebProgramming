@@ -44,19 +44,26 @@ router.get('/new', isLoggedIn, isEmailConfirmed, (req, res) => {
 });
 
 router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
-    const selfID = req.user.id;
-    let following = req.user.Followings.map(f => f.id);
-    following = following.push(selfID);
-    console.log("following : " + following);
-    const followingAttr = {};//출처 : https://velog.io/@jujube0/Sequelize-%EB%AC%B8%EC%A0%9C%ED%95%B4%EA%B2%B0
-    if (following) { followingAttr[Op.not] = following; } else { followingAttr[Op.not] = selfID; }
-    const notFollowing = await User.findAll({
-        attributes: ['id', 'name'],
-        where: { id: followingAttr },
-        order: [['createdAt', 'DESC']],
-    });
-    console.log("not following : " + notFollowing);
-    res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
+    const following = req.user.Followings.map(f => f.id);
+    try {
+        const notFollowing = await User.findAll({
+            attributes: ['id', 'name'],
+            where: {
+                id:{
+                    [Op.and]:{
+                        [Op.not]: following,
+                        [Op.not]: req.user.id
+                    }
+                }
+            },
+            order: [['createdAt', 'DESC']],
+        });
+        //console.log("not following : " + notFollowing.map(f=>f.id));
+        res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
 router.get('/profile', isLoggedIn, (req, res) => {
