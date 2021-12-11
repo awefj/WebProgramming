@@ -52,6 +52,7 @@
             formData.append('img', this.files[0]);
             axios.post('/post/img', formData)
                 .then((res) => {
+                    console.log('res.data.url : ', res.data.url);
                     document.getElementById('img-url').value = res.data.url;
                     document.getElementById('img-preview').src = res.data.url;
                     document.getElementById('img-preview').style.display = 'inline';
