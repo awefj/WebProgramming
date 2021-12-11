@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="newContainer">
-    <form id="postForm" action="/post" enctype="multipart/form-data">
+    <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
         <div class="inputGroup">
             <textarea id="postContent" name="content" maxlength="200"></textarea>
         </div>
         <div class="imgPreview">
-            <img id="imgPreview" src="" style="display: none;" width="400" alt="미리보기">
-            <input id="imgUrl" type="hidden" name="url" multiple>
+            <img id="imgPreview" src="" style="display: none;" width="250" alt="미리보기">
+            <input id="imgURL" type="hidden" name="url">
         </div>
         <div>
             <label id="imgLabel" for="imgs">사진 업로드</label>
-            <input id="imgs" type="file" accept="image/*" multiple>
+            <input id="imgs" name="imgs" type="file" accept="image/*" multiple>
             <button id="postBtn" type="submit" class="btn">게시</button>
         </div>
         <div>
@@ -25,17 +25,45 @@
 {% block script %}
 <script>
     if (document.getElementById('imgs')) {
+        let total = 0;
+        let index = 0;
         document.getElementById('imgs').addEventListener('change', function (e) {
             const formData = new FormData();
-            console.log(this, this.files);
-            formData.append('imgs', this.files);
+            const length = this.files.length;
+            const max = 5;
+            if (length > max - total) {
+                alert("사진은 최대 5장까지만 올릴 수 있습니다.");
+                return;
+            }else{
+                total += length;
+            }
+            console.log(`파일 수 : ${total}`);
+            console.log(this.files);
+            for (i = 0; i < length; i++) {
+                formData.append('imgs', this.files[i]);
+                index++;
+            }
             axios.post('/post/img', formData)
                 .then((res) => {
-                    document.getElementById('imgUrl').value = res.data.url;
-                    document.getElementById('imgPreview').src = res.data.url;
+                    console.log('res.data : ', res.data);
+                    document.getElementById('imgURL').value = res.data;
+                    document.getElementById('imgPreview').src = res.data;
                     document.getElementById('imgPreview').style.display = 'inline';
+                    /*
+                    let url = JSON.parse(res.data);
+                    console.log(url);
+                    let imgHtml = "";
+                    for (i = 0; i < url.length; i++) {
+                        console.log("미리보기", url[i]);
+                        imgHtml += `<div class="imgPreview${index}"><img id="previewImg${index}" src="${url[i]}" width="250" alt="미리보기"><input id="imgURL" type="hidden" name="url" value="${url[i]}"></div>`;
+                        console.log("json 길이 : ", url.length);
+                        console.log("서버 index : ", index);
+                        console.log(imgHtml)
+                    }
+                    $(".imgPreview").append(imgHtml);
+                    */
                 })
-                .catch((err) => { console.errror(err); });
+                .catch((err) => { console.error(err); });
         });
     };
 </script>
