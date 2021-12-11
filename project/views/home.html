@@ -34,20 +34,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    if (document.getElementById('imgs')) {
-        document.getElementById('imgs').addEventListener('change', function (e) {
-            const formData = new FormData();
-            console.log(this, this.files);
-            formData.append('imgs', this.files);
-            axios.post('/post/img', formData)
-                .then((res) => {
-                    document.getElementById('imgUrl').value = res.data.url;
-                    document.getElementById('imgPreview').src = res.data.url;
-                    document.getElementById('imgPreview').style.display = 'inline';
-                })
-                .catch((err) => { console.errror(err); });
-        });
-    };
-</script>
+<script></script>
 {% endblock %}
