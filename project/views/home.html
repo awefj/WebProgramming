@@ -15,19 +15,14 @@
         </form>
     </div>
     <div>
-
         {% for post in posts %}
         <div class="post">
+            <form id="nameForm" action="/name">
+                <button class="btn">{{post.User.name}}</button>
+            </form>
             <input type="hidden" value="{{post.User.Web47ID}}" class="postUserID">
             <input type="hidden" value="{{post.id}}" class="postID">
-            <div class="postAuthor">{{post.User.name}}</div>
-            {% if not followerIdList.includes(post.User.id) and post.User.id !== user.id %}
-            <button class="postFollow">팔로우하기</button>
-            {% endif %}
             <div class="postContent">{{post.content}}</div>
-            {% if post.imgs %}
-            <div class="postImg"><img src="{{post.imgs}}" alt="thumbnail"></div>
-            {% endif %}
         </div>
         {% endfor %}
     </div>

@@ -2,27 +2,17 @@
 
 {% block content %}
 {% if isNew %}
+<!--새로생성-->
 <div class="newContainer">
     <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
-        <div class="inputGroup">
-            <textarea id="postContent" name="content" maxlength="200"></textarea>
-        </div>
-        <div class="imgPreview">
-            <img id="imgPreview0" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL0" type="hidden" name="url">
-            <img id="imgPreview1" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL1" type="hidden" name="url">
-            <img id="imgPreview2" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL2" type="hidden" name="url">
-            <img id="imgPreview3" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL3" type="hidden" name="url">
-            <img id="imgPreview4" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL4" type="hidden" name="url">
-        </div>
+        <div class="imgPreview" id="imgPreview"></div>
         <div>
             <label id="imgLabel" for="imgs">사진 업로드</label>
             <input id="imgs" name="imgs" type="file" accept="image/*" multiple>
             <button id="postBtn" type="submit" class="btn">게시</button>
+        </div>
+        <div class="inputGroup">
+            <textarea id="postContent" name="content" maxlength="200"></textarea>
         </div>
         <div>
             <a id="home" href="/home" class="btn">home</a>
@@ -30,27 +20,17 @@
     </form>
 </div>
 {% else %}
+<!--수정-->
 <div class="editContainer">
     <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
-        <div class="inputGroup">
-            <textarea id="postContent" name="content" maxlength="200"></textarea>
-        </div>
-        <div class="imgPreview">
-            <img id="imgPreview0" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL0" type="hidden" name="url">
-            <img id="imgPreview1" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL1" type="hidden" name="url">
-            <img id="imgPreview2" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL2" type="hidden" name="url">
-            <img id="imgPreview3" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL3" type="hidden" name="url">
-            <img id="imgPreview4" src="" style="display: none;" width="200" alt="미리보기">
-            <input id="imgURL4" type="hidden" name="url">
-        </div>
+        <div class="imgPreview"></div>
         <div>
             <label id="imgLabel" for="imgs">사진 업로드</label>
             <input id="imgs" name="imgs" type="file" accept="image/*" multiple>
             <button id="postBtn" type="submit" class="btn">수정</button>
+        </div>
+        <div class="inputGroup">
+            <textarea id="postContent" name="content" maxlength="200"></textarea>
         </div>
         <div>
             <a id="home" href="/home" class="btn">home</a>
@@ -75,24 +55,36 @@
             } else {
                 total += length;
             }
-            console.log(`파일 수 : ${total}`);
-            console.log(this.files);
+            console.log('파일 수 : ', total);
+            console.log('내용 : ', this.files);
             for (i = 0; i < length; i++) {
                 formData.append('imgs', this.files[i]);
                 index++;
             }
+            //console.log('formdata : ', formData);//formdata 바로찍어보면 안나옴
+            /*
+            for (i of formData.keys()) {
+                console.log('key : ', i);
+            }
+            for (i of formData.values()) {
+                console.log('value : ', i);
+            }
+            */
             axios.post('/post/img', formData)
                 .then((res) => {
-                    console.log('res.data : ', res.data);
-                    for (i = 0; i < res.data.length; i++) {
-                        document.getElementById(`imgURL${i}`).value = res.data[i];
-                        document.getElementById(`imgPreview${i}`).src = res.data[i];
-                        document.getElementById(`imgPreview${i}`).style.display = 'inline';
+                    jsonData = JSON.parse(res.data);
+                    for (i = 0; i < jsonData.length; i++) {
+                        let im = document.createElement('img');
+                        im.src = jsonData[i];//보여주기 위한 정보
+                        im.width = '200';
+                        im.display = 'inline';
+                        let inp = document.createElement('input');
+                        inp.type = 'hidden';
+                        inp.value = jsonData[i];//서버에 넘겨주기 위한 정보
+                        inp.name = 'url'
+                        document.getElementById('imgPreview').appendChild(im);
+                        document.getElementById('imgPreview').appendChild(inp);
                     }
-                    //console.log('res.data parsed : ', JSON.parse(res.data));
-                    //document.getElementById('imgURL').value = JSON.parse(res.data);
-                    //document.getElementById('imgPreview').src = JSON.parse(res.data);
-                    //document.getElementById('imgPreview').style.display = 'inline';
                 })
                 .catch((err) => { console.error(err); });
         });

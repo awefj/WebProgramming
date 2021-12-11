@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 const { isLoggedIn, isNotLoggedIn, isEmailConfirmed } = require('./middlewares');
-const { Post, User, Hashtag } = require('../models');
+const { Post, User, Hashtag, Image } = require('../models');
 const e = require('express');
 
 const router = express.Router();
@@ -22,13 +22,18 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     try {
         const posts = await Post.findAll({
             offset: perPage * pageNum,
-            limit: perPage,//해당 페이지 9개만 가져와야됨
+            limit: perPage,//pagination - 해당 페이지 9개만 가져와야됨
             include: {
                 model: User,
                 attributes: ['id', 'name'],
             },
+            include: {
+                model: Image,
+                order: [['index']],
+            },
             order: [['createdAt', 'DESC']],
         });
+        //console.log('images : ', posts.map(i=>i.Images));
         res.render('home', {
             title: '메인 - Web47 SNS',
             posts: posts,
@@ -50,16 +55,15 @@ router.get('/edit', isLoggedIn, isEmailConfirmed, (req, res) => {
 router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     console.log(`id : ${req.user.id} typeof id : ${typeof req.user.id}`);
     const following = req.user.Followings.map(f => f.id);// 팔로우 중인 유저
-    //console.log("following : " + following);
+    console.log("following : " + following);
     const exclude = following.concat(req.user.id);// 본인과 팔로우 중인 유저
-    //console.log("exclude : " + exclude);
+    console.log("exclude : " + exclude);
     try {
         const notFollowing = await User.findAll({
             attributes: ['id', 'name'],
             where: {
                 id: { [Op.not]: exclude }
             },
-            //order: [['createdAt', 'DESC']],
         });
         console.log("not following : " + notFollowing.map(f => f.id));
         res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
@@ -81,7 +85,7 @@ router.get('/', (req, res) => {
     res.render('main', { title: 'Web47 SNS' });
 });
 
-router.get('/hashtag', async (req, res, next) => {
+router.get('/hashtag', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     const query = req.query.hashtag;
     if (!query) {
         return res.redirect('/home');
@@ -92,6 +96,26 @@ router.get('/hashtag', async (req, res, next) => {
         if (hashtag) {
             posts = await hashtag.getPosts({ include: [{ model: User }] });
         }
+        return res.render('home', { title: `${query} | Web47 SNS`, posts: posts });
+    } catch (err) {
+        console.error(err);
+        return next(err);
+    }
+});
+
+// 수정 필요
+router.get('/name', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    const query = req.query.name;
+    if (!query) {
+        return res.redirect('/home');
+    }
+    try {
+        const user = await User.findOne({ where: { name: query } });
+        let posts = [];
+        if (user) {
+            posts = await User.getPosts({ where: { UserId: user.id } });
+        }
+        console.log('posts : ', posts);
         return res.render('home', { title: `${query} | Web47 SNS`, posts: posts });
     } catch (err) {
         console.error(err);
