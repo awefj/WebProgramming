@@ -33,17 +33,16 @@ router.post('/img', isLoggedIn, isEmailConfirmed, uploadImg.array('imgs', 5), fu
     console.log(`files : ${req.files.map(item => item.filename)}`);
     const ary = req.files.map(item=>`/img/${item.filename}`);
     console.log('ary : ', ary);
-    const urlJSON = JSON.stringify({url: ary});
-    console.log("url json : ", urlJSON);
-    res.json(urlJSON);
+    res.send(ary);
 });
 //포스트
 const upload = multer();
-router.post('/', isLoggedIn, isEmailConfirmed, upload.none(), async (req, res, next) => {
+router.post('/', isLoggedIn, isEmailConfirmed, upload.array('imgs', 5), async (req, res, next) => {
     try {
-        console.log(`uploader : ${req.user}`);
+        console.log('uploader : ', req.user.id);
         const url = req.body.url;
-        console.log(url);
+        console.log('imgCount : ', url.length);
+        console.log('url : ', url);
         const post = await Post.create({
             content: req.body.content,
             UserId: req.user.id,
@@ -54,7 +53,7 @@ router.post('/', isLoggedIn, isEmailConfirmed, upload.none(), async (req, res, n
                 url.map(item => {
                     return Image.create({
                         img: item,
-                        index: index,
+                        index: item.index,
                         PostId: post.id
                     });
                 })

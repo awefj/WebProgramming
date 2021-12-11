@@ -11,12 +11,13 @@
         <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
     </div>
     <div>
+        <form id="hashtagForm" action="/hashtag">
+            <input type="text" name="hashtag" placeholder="해시태그 검색">
+            <button class="btn">검색</button>
+        </form>
         {% for post in posts %}
         <div class="post">
-            <form id="hashtagForm" action="/hashtag">
-                <input type="text" name="hashtag" placeholder="해시태그 검색">
-                <button class="btn">검색</button>
-            </form>
+
             <input type="hidden" value="{{post.User.Web47ID}}" class="postUserID">
             <input type="hidden" value="{{post.id}}" class="postID">
             <div class="postAuthor">{{post.User.name}}</div>
