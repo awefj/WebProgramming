@@ -26,9 +26,9 @@
 
 {% block script %}
 <script>
-    window.onload = ()=>{
+    window.onload = () => {
         err = new URL(location.href).searchParams.get('error');
-        if(err == 'need_login'){
+        if (err == 'need_login') {
             alert('로그인이 필요합니다.');
         }
     }
