@@ -52,6 +52,7 @@
             formData.append('img', this.files[0]);
             axios.post('/post/img', formData)
                 .then((res) => {
+                    console.log('res.data.url : ', res.data.url);
                     document.getElementById('img-url').value = res.data.url;
                     document.getElementById('img-preview').src = res.data.url;
                     document.getElementById('img-preview').style.display = 'inline';
@@ -60,7 +61,7 @@
                     console.error(err);
                 });
         });
-    }
+    };
     document.querySelectorAll('.twit-follow').forEach(function (tag) {
         tag.addEventListener('click', function () {
             const myId = document.querySelector('#my-id');
