@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="followContainer">
+    <input id="myID" type="hidden" value="{{user.id}}">
+    <a id="home" href="/home" class="btn">home</a>
+    <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+
+    <div class="followings">
+        <h2>팔로잉 목록</h2>
+        {% if user.Followings %}
+        {% for following in user.Followings %}
+        <div>
+            <input class="followingID" type="hidden" value="{{following.id}}">
+            {{following.web47ID}}
+            <button class="unfollow">언팔로우하기</button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="followables">
+        <h2>팔로우 가능 목록</h2>
+        {% if notFollow %}
+        {% for followable in notFollow %}
+        <div>
+            <input class="notFollowID" type="hidden" value="{{followable.id}}">
+            {{followable.name}}
+            <button class="follow">팔로우하기</button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const myID = document.querySelector('#myID');
+    //console.log("myID : " + myID.value);
+    document.querySelectorAll('.unfollow').forEach(function (tag) {
+        tag.addEventListener('click', function () {
+            if (myID) {
+                const followingID = tag.parentNode.querySelector('.followingID').value;
+                console.log("followingID : " + followingID);
+                if (confirm('언팔로우 하시겠습니까?')) {
+                    axios.post(`/user/${followingID}/unfollow`)
+                        .then(() => { location.reload(); })
+                        .catch((err) => { console.error(err); });
+                }
+            }
+        });
+    });
+    document.querySelectorAll('.follow').forEach(function (tag) {
+        tag.addEventListener('click', function () {
+            if (myID) {
+                const notFollowID = tag.parentNode.querySelector('.notFollowID').value;
+                console.log("notFollowID : " + notFollowID);
+                if (confirm('팔로우 하시겠습니까?')) {
+                    axios.post(`/user/${notFollowID}/follow`)
+                        .then(() => { location.reload(); })
+                        .catch((err) => { console.error(err); });
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="newContainer">
+    <form id="postForm" action="/post" enctype="multipart/form-data">
+        <div class="inputGroup">
+            <textarea id="postContent" name="content" maxlength="200"></textarea>
+        </div>
+        <div class="imgPreview">
+            <img id="imgPreview" src="" style="display: none;" width="400" alt="미리보기">
+            <input id="imgUrl" type="hidden" name="url" multiple>
+        </div>
+        <div>
+            <label id="imgLabel" for="imgs">사진 업로드</label>
+            <input id="imgs" type="file" accept="image/*" multiple>
+            <button id="postBtn" type="submit" class="btn">게시</button>
+        </div>
+        <div>
+            <a id="home" href="/home" class="btn">home</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    if (document.getElementById('imgs')) {
+        document.getElementById('imgs').addEventListener('change', function (e) {
+            const formData = new FormData();
+            console.log(this, this.files);
+            formData.append('imgs', this.files);
+            axios.post('/post/img', formData)
+                .then((res) => {
+                    document.getElementById('imgUrl').value = res.data.url;
+                    document.getElementById('imgPreview').src = res.data.url;
+                    document.getElementById('imgPreview').style.display = 'inline';
+                })
+                .catch((err) => { console.errror(err); });
+        });
+    };
+</script>
+{% endblock %}

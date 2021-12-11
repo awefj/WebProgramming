@@ -1,6 +1,8 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const { isLoggedIn, isNotLoggedIn, isEmailConfirmed } = require('./middlewares');
 const { Post, User, Hashtag } = require('../models');
+const e = require('express');
 
 const router = express.Router();
 
@@ -12,8 +14,55 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/home', isLoggedIn, isEmailConfirmed, (req, res) => {
-    res.render('home', { title: '메인 - Web47 SNS' });
+router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    const perPage = 9; //페이지 당 9개 포스트로 제한
+    const pageCount = Math.ceil(Post.count() / perPage); //전체 페이지 수
+    let pageNum = req.query.pageNum ? parseInt(req.query.pageNum) - 1 : 0;//요청한 페이지 - 특정 페이지 요청이 없으면 0
+    if (pageNum > pageCount) pageNum = pageCount; //요청 페이지가 존재하는 페이지보다 큰 경우 마지막 페이지로 설정
+    try {
+        const posts = await Post.findAll({
+            offset: perPage * pageNum,
+            limit: perPage,//해당 페이지 9개만 가져와야됨
+            include: {
+                model: User,
+                attributes: ['id', 'name'],
+            },
+            order: [['createdAt', 'DESC']],
+        });
+        res.render('home', {
+            title: '메인 - Web47 SNS',
+            posts: posts,
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
+router.get('/new', isLoggedIn, isEmailConfirmed, (req, res) => {
+    res.render('new', { title: '포스트 작성 - Web47 SNS' });
+});
+
+router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    console.log(`id : ${req.user.id} typeof id : ${typeof req.user.id}`);
+    const following = req.user.Followings.map(f => f.id);// 팔로우 중인 유저
+    //console.log("following : " + following);
+    const exclude = following.concat(req.user.id);// 본인과 팔로우 중인 유저
+    //console.log("exclude : " + exclude);
+    try {
+        const notFollowing = await User.findAll({
+            attributes: ['id', 'name'],
+            where: {
+                id: { [Op.not]: exclude }
+            },
+            //order: [['createdAt', 'DESC']],
+        });
+        console.log("not following : " + notFollowing.map(f => f.id));
+        res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
 router.get('/profile', isLoggedIn, (req, res) => {

@@ -7,25 +7,11 @@ module.exports = class Post extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: false,
             },
-            img0: {
-                type: Sequelize.STRING(200),
+            imgs: { //이미지 여러개 주소를 ';' 로 분리. 출처: https://stackoverflow.com/questions/41860792/
+                type: Sequelize.STRING,
                 allowNull: true,
-            },
-            img1: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img2: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img3: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
-            },
-            img4: {
-                type: Sequelize.STRING(200),
-                allowNull: true,
+                get() { return this.getDataValue('imgs').split(';') },
+                set(val) { this.setDataValue('imgs', val.join(';')); },
             },
         }, {
             sequelize,
