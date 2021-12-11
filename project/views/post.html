@@ -1,21 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+{% if isNew %}
 <div class="newContainer">
     <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
         <div class="inputGroup">
             <textarea id="postContent" name="content" maxlength="200"></textarea>
         </div>
         <div class="imgPreview">
-            <img id="imgPreview0" src="" style="display: none;" width="250" alt="미리보기">
+            <img id="imgPreview0" src="" style="display: none;" width="200" alt="미리보기">
             <input id="imgURL0" type="hidden" name="url">
-            <img id="imgPreview1" src="" style="display: none;" width="250" alt="미리보기">
+            <img id="imgPreview1" src="" style="display: none;" width="200" alt="미리보기">
             <input id="imgURL1" type="hidden" name="url">
-            <img id="imgPreview2" src="" style="display: none;" width="250" alt="미리보기">
+            <img id="imgPreview2" src="" style="display: none;" width="200" alt="미리보기">
             <input id="imgURL2" type="hidden" name="url">
-            <img id="imgPreview3" src="" style="display: none;" width="250" alt="미리보기">
+            <img id="imgPreview3" src="" style="display: none;" width="200" alt="미리보기">
             <input id="imgURL3" type="hidden" name="url">
-            <img id="imgPreview4" src="" style="display: none;" width="250" alt="미리보기">
+            <img id="imgPreview4" src="" style="display: none;" width="200" alt="미리보기">
             <input id="imgURL4" type="hidden" name="url">
         </div>
         <div>
@@ -28,6 +29,35 @@
         </div>
     </form>
 </div>
+{% else %}
+<div class="editContainer">
+    <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
+        <div class="inputGroup">
+            <textarea id="postContent" name="content" maxlength="200"></textarea>
+        </div>
+        <div class="imgPreview">
+            <img id="imgPreview0" src="" style="display: none;" width="200" alt="미리보기">
+            <input id="imgURL0" type="hidden" name="url">
+            <img id="imgPreview1" src="" style="display: none;" width="200" alt="미리보기">
+            <input id="imgURL1" type="hidden" name="url">
+            <img id="imgPreview2" src="" style="display: none;" width="200" alt="미리보기">
+            <input id="imgURL2" type="hidden" name="url">
+            <img id="imgPreview3" src="" style="display: none;" width="200" alt="미리보기">
+            <input id="imgURL3" type="hidden" name="url">
+            <img id="imgPreview4" src="" style="display: none;" width="200" alt="미리보기">
+            <input id="imgURL4" type="hidden" name="url">
+        </div>
+        <div>
+            <label id="imgLabel" for="imgs">사진 업로드</label>
+            <input id="imgs" name="imgs" type="file" accept="image/*" multiple>
+            <button id="postBtn" type="submit" class="btn">수정</button>
+        </div>
+        <div>
+            <a id="home" href="/home" class="btn">home</a>
+        </div>
+    </form>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block script %}

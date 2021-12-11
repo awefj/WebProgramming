@@ -40,8 +40,12 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
 });
 
 router.get('/new', isLoggedIn, isEmailConfirmed, (req, res) => {
-    res.render('new', { title: '포스트 작성 - Web47 SNS' });
+    res.render('post', { title: '포스트 작성 - Web47 SNS', isNew: true });
 });
+
+router.get('/edit', isLoggedIn, isEmailConfirmed, (req, res) => {
+    res.render('post', { title: '포스트 수정 - Web47 SNS', isNew: false })
+})
 
 router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     console.log(`id : ${req.user.id} typeof id : ${typeof req.user.id}`);
@@ -75,6 +79,24 @@ router.get('/account', isNotLoggedIn, (req, res) => {
 
 router.get('/', (req, res) => {
     res.render('main', { title: 'Web47 SNS' });
+});
+
+router.get('/hashtag', async (req, res, next) => {
+    const query = req.query.hashtag;
+    if (!query) {
+        return res.redirect('/home');
+    }
+    try {
+        const hashtag = await Hashtag.findOne({ where: { title: query } });
+        let posts = [];
+        if (hashtag) {
+            posts = await hashtag.getPosts({ include: [{ model: User }] });
+        }
+        return res.render('home', { title: `${query} | Web47 SNS`, posts: posts });
+    } catch (err) {
+        console.error(err);
+        return next(err);
+    }
 });
 
 router.use((req, res, next) => {

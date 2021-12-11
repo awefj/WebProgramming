@@ -22,7 +22,7 @@ module.exports = class Image extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Post.belongsTo(db.Post);
+        db.Image.belongsTo(db.Post);
         //foreignkey 옵션을 지정하지 않아서 알아서 PostId foreignkey column을 생성.
     }
 };
