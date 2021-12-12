@@ -62,14 +62,12 @@
                 index++;
             }
             //console.log('formdata : ', formData);//formdata 바로찍어보면 안나옴
-            /*
             for (i of formData.keys()) {
                 console.log('key : ', i);
             }
             for (i of formData.values()) {
                 console.log('value : ', i);
             }
-            */
             axios.post('/post/img', formData)
                 .then((res) => {
                     jsonData = JSON.parse(res.data);

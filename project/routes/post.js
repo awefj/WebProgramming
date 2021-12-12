@@ -43,8 +43,14 @@ const upload = multer();
 router.post('/', isLoggedIn, isEmailConfirmed, upload.array('imgs', 5), async (req, res, next) => {
     try {
         console.log('uploader : ', req.user.id);
+        console.log('req.body : ', req.body);
         console.log('req.body.url : ', req.body.url);
-        const url = Array.isArray(req.body.url) ? req.body.url : [req.body.url];
+        let url = req.body.url;
+        if(url == undefined){
+            url = null;
+        }else{
+            url = Array.isArray(req.body.url) ? req.body.url : [req.body.url];
+        }
         console.log('url : ', url);
         const post = await Post.create({
             content: req.body.content,
