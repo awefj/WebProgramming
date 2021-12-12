@@ -27,13 +27,17 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
                 model: User,
                 attributes: ['id', 'name'],
             },
+            /*
             include: {
                 model: Image,
+                attributes: ['index', 'img'],
                 order: [['index']],
             },
+            */
             order: [['createdAt', 'DESC']],
         });
-        //console.log('images : ', posts.map(i=>i.Images));
+        //console.log('images : ', posts.map(i=>i.Images.img));
+        console.log('posts : ', posts);
         res.render('home', {
             title: '메인 - Web47 SNS',
             posts: posts,

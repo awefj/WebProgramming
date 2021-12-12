@@ -17,9 +17,15 @@
     <div>
         {% for post in posts %}
         <div class="post">
+            {% if post.img %}
+            {% for img in post.img %}
+            <img src="{{img}}" alt="thumbnail" width="200">
+            {% endfor %}
+            {% endif %}
             <form id="nameForm" action="/name">
                 <button class="btn">{{post.User.name}}</button>
             </form>
+            {{post.updatedAt}}
             <input type="hidden" value="{{post.User.Web47ID}}" class="postUserID">
             <input type="hidden" value="{{post.id}}" class="postID">
             <div class="postContent">{{post.content}}</div>

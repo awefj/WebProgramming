@@ -7,6 +7,21 @@ module.exports = class Post extends Sequelize.Model {
                 type: Sequelize.STRING(200),
                 allowNull: false,
             },
+            img: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                //참고 : https://stackoverflow.com/questions/41860792/how-can-i-have-a-datatype-of-array-in-mysql-sequelize-instance
+                get() {
+                    let temp = this.getDataValue('img').split(';');
+                    console.log('img get : ', temp);
+                    return temp;
+                },
+                set(val) {
+                    let temp = val.join(';');
+                    console.log('img set : ', temp);
+                    this.setDataValue('img', temp);
+                },
+            }
         }, {
             sequelize,
             timestamps: true,
@@ -21,6 +36,6 @@ module.exports = class Post extends Sequelize.Model {
     static associate(db) {
         db.Post.belongsTo(db.User);
         db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
-        db.Post.hasMany(db.Image);
+        //db.Post.hasMany(db.Image);
     }
 };
