@@ -17,7 +17,7 @@
     <div>
         {% for post in posts %}
         <div class="post">
-            {% if post.img %}
+            {% if post.img != null %}
             {% for img in post.img %}
             <img src="{{img}}" alt="thumbnail" width="200">
             {% endfor %}

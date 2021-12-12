@@ -12,12 +12,13 @@ module.exports = class Post extends Sequelize.Model {
                 allowNull: true,
                 //참고 : https://stackoverflow.com/questions/41860792/how-can-i-have-a-datatype-of-array-in-mysql-sequelize-instance
                 get() {
-                    let temp = this.getDataValue('img').split(';');
+                    let temp = this.getDataValue('img') != null ? this.getDataValue('img').split(';') : null;
                     console.log('img get : ', temp);
                     return temp;
                 },
                 set(val) {
-                    let temp = val.join(';');
+                    console.log('val : ', val);
+                    let temp = val != null ? val.join(';') : null;
                     console.log('img set : ', temp);
                     this.setDataValue('img', temp);
                 },
@@ -36,6 +37,5 @@ module.exports = class Post extends Sequelize.Model {
     static associate(db) {
         db.Post.belongsTo(db.User);
         db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
-        //db.Post.hasMany(db.Image);
     }
 };
