@@ -16,20 +16,34 @@
     </div>
     <div>
         {% for post in posts %}
-        <div class="post">
+        <div class="post" id="post_{{loop.index}}">
             {% if post.img != null %}
             {% for img in post.img %}
-            <img src="{{img}}" alt="thumbnail" width="200">
+            <img id="{{loop.index}}" src="{{img}}" alt="thumbnail" width="100%">
             {% endfor %}
             {% endif %}
-            <form id="nameForm" action="/name">
+            {% if post.User.id == user.id %}
+            <form id="editForm" action="/edit">
+                <input type="hidden" name="postID" value="{{post.id}}" class="postID">
+                <button class="btn">수정</button>
+            </form>
+            {% endif %}
+            <form id="nameForm" action="/userID">
+                User Name :
+                <input type="hidden" name="postUserID" value="{{post.User.web47ID}}" class="postWeb47ID">
                 <button class="btn">{{post.User.name}}</button>
             </form>
             {{post.updatedAt}}
-            <input type="hidden" value="{{post.User.Web47ID}}" class="postUserID">
-            <input type="hidden" value="{{post.id}}" class="postID">
             <div class="postContent">{{post.content}}</div>
         </div>
+        {% endfor %}
+    </div>
+    <div>
+        <!-- 페이지 번호 -->
+
+        <!-- 참고 : https://ons-design-system.netlify.app/components/pagination/-->
+        {% for pageNum in pageCount %}
+        <a href="">{{loop.index}}</a>
         {% endfor %}
     </div>
 </div>

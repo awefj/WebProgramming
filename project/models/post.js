@@ -13,13 +13,13 @@ module.exports = class Post extends Sequelize.Model {
                 //참고 : https://stackoverflow.com/questions/41860792/how-can-i-have-a-datatype-of-array-in-mysql-sequelize-instance
                 get() {
                     let temp = this.getDataValue('img') != null ? this.getDataValue('img').split(';') : null;
-                    console.log('img get : ', temp);
+                    //console.log('img get : ', temp);
                     return temp;
                 },
                 set(val) {
                     console.log('val : ', val);
                     let temp = val != null ? val.join(';') : null;
-                    console.log('img set : ', temp);
+                    //console.log('img set : ', temp);
                     this.setDataValue('img', temp);
                 },
             }

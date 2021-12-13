@@ -1,8 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 const { isLoggedIn, isNotLoggedIn, isEmailConfirmed } = require('./middlewares');
-const { Post, User, Hashtag, Image } = require('../models');
-const e = require('express');
+const { Post, User, Hashtag } = require('../models');
 
 const router = express.Router();
 
@@ -23,16 +22,14 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
         const posts = await Post.findAll({
             offset: perPage * pageNum,
             limit: perPage,//pagination - 해당 페이지 9개만 가져와야됨
-            include: {
-                model: User,
-                attributes: ['id', 'name'],
-            },
+            include: { model: User, },
             order: [['createdAt', 'DESC']],
         });
         //console.log('posts : ', posts);
         res.render('home', {
             title: '메인 - Web47 SNS',
             posts: posts,
+            pageCount: pageCount,
         });
     } catch (err) {
         console.error(err);
@@ -61,7 +58,7 @@ router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
                 id: { [Op.not]: exclude }
             },
         });
-        console.log("not following : " + notFollowing.map(f => f.id));
+        //console.log("not following : " + notFollowing.map(f => f.id));
         res.render('follow', { title: '팔로우 관리 - Web47 SNS', notFollow: notFollowing });
     } catch (err) {
         console.error(err);
@@ -83,6 +80,26 @@ router.get('/', (req, res) => {
 
 router.get('/hashtag', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     const query = req.query.hashtag;
+    console.log('hashtag : ', query);
+    if (!query) {
+        return res.redirect('/home');
+    }
+    try {
+        const hashtag = await Hashtag.findOne({ where: { title: { [Op.like]: "%" + query + "%" } } });
+        let posts = [];
+        if (hashtag) {
+            posts = await hashtag.getPosts({ include: [{ model: User }] });
+        }
+        return res.render('home', { title: `${query} | Web47 SNS`, posts: posts });
+    } catch (err) {
+        console.error(err);
+        return next(err);
+    }
+});
+
+router.get('/hashtagMatch', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    const query = req.query.hashtagClick;
+    console.log('hashtagMatch : ', query);
     if (!query) {
         return res.redirect('/home');
     }
@@ -100,18 +117,21 @@ router.get('/hashtag', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
 });
 
 // 수정 필요
-router.get('/name', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
-    const query = req.query.name;
+router.get('/userID', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    const query = req.query.postUserID;
     if (!query) {
         return res.redirect('/home');
     }
     try {
-        const user = await User.findOne({ where: { name: query } });
+        const user = await User.findOne({ where: { web47ID: query } });
         let posts = [];
         if (user) {
-            posts = await User.getPosts({ where: { UserId: user.id } });
+            posts = await Post.findAll({
+                include: { model: User },
+                where: { UserId: user.id },
+                order: [['createdAt', 'DESC']],
+            });
         }
-        console.log('posts : ', posts);
         return res.render('home', { title: `${query} | Web47 SNS`, posts: posts });
     } catch (err) {
         console.error(err);
