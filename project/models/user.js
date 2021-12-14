@@ -42,12 +42,12 @@ module.exports = class User extends Sequelize.Model {
         db.User.belongsToMany(db.User, {//user follow
             foreignKey: 'followingID',
             as: 'Followers',
-            through: 'Follow',
+            through: 'follow',
         });
         db.User.belongsToMany(db.User, {
             foreignKey: 'followerID',
             as: 'Followings',
-            through: 'Follow',
+            through: 'follow',
         });
         db.User.hasOne(db.AuthCode, {
             foreignKey: 'userID',
