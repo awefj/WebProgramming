@@ -42,8 +42,19 @@ router.get('/new', isLoggedIn, isEmailConfirmed, (req, res) => {
     res.render('post', { title: '포스트 작성 - Web47 SNS', isNew: true });
 });
 
-router.get('/edit', isLoggedIn, isEmailConfirmed, (req, res) => {
-    res.render('post', { title: '포스트 수정 - Web47 SNS', isNew: false })
+router.get('/edit', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
+    const query = parseInt(req.query.postID, 10);
+    console.log('edit post : ', query);
+    if (!query) {
+        return res.redirect('/home');
+    }
+    try {
+        const edit = await Post.findOne({ where: { id: query } });
+        return res.render('post', { title: '포스트 수정 - Web47 SNS', isNew: false, post: edit });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 })
 
 router.get('/follow', isLoggedIn, isEmailConfirmed, async (req, res, next) => {

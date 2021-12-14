@@ -24,6 +24,8 @@
 <div class="editContainer">
     <form id="postForm" action="/post" method="post" enctype="multipart/form-data">
         <div class="imgPreview"></div>
+        {% for image in post.img %}
+        {% endfor %}
         <div>
             <label id="imgLabel" for="imgs">사진 업로드</label>
             <input id="imgs" name="imgs" type="file" accept="image/*" multiple>
