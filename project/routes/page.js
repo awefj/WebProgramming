@@ -30,6 +30,7 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
         res.render('home', {
             title: '메인 - Web47 SNS',
             posts: posts,
+            currentPage : pageNum,
             pageCount: pageCount,
         });
     } catch (err) {
