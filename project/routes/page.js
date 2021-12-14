@@ -15,7 +15,9 @@ router.use((req, res, next) => {
 
 router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     const perPage = 9; //페이지 당 9개 포스트로 제한
-    const pageCount = Math.ceil(Post.count() / perPage); //전체 페이지 수
+    const postCount = await Post.count();
+    const pageCount = Math.ceil(postCount / perPage); //전체 페이지 수
+    console.log('total pages : ', pageCount);
     let pageNum = req.query.pageNum ? parseInt(req.query.pageNum) - 1 : 0;//요청한 페이지 - 특정 페이지 요청이 없으면 0
     if (pageNum > pageCount) pageNum = pageCount; //요청 페이지가 존재하는 페이지보다 큰 경우 마지막 페이지로 설정
     try {
@@ -25,7 +27,6 @@ router.get('/home', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
             include: { model: User, },
             order: [['createdAt', 'DESC']],
         });
-        //console.log('posts : ', posts);
         res.render('home', {
             title: '메인 - Web47 SNS',
             posts: posts,
@@ -116,7 +117,6 @@ router.get('/hashtagMatch', isLoggedIn, isEmailConfirmed, async (req, res, next)
     }
 });
 
-// 수정 필요
 router.get('/userID', isLoggedIn, isEmailConfirmed, async (req, res, next) => {
     const query = req.query.postUserID;
     if (!query) {

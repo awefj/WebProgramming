@@ -40,10 +40,10 @@
     </div>
     <div>
         <!-- 페이지 번호 -->
-
+        <a>페이지 수 : {{pageCount}}</a>
         <!-- 참고 : https://ons-design-system.netlify.app/components/pagination/-->
         {% for pageNum in pageCount %}
-        <a href="">{{loop.index}}</a>
+        <a>{{pageNum}}</a>
         {% endfor %}
     </div>
 </div>
