@@ -12,7 +12,7 @@ module.exports = class AuthCode extends Sequelize.Model {
             timestamps: true,
             underscored: false,
             modelName: 'AuthCode',
-            tableName: 'authCodes',
+            tableName: 'authcodes',
             paranoid: false,
             charset: 'utf8',
             collate: 'utf8_general_ci',
